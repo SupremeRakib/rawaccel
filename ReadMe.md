@@ -19,5 +19,5 @@ simon - Driver & Acceleration Logic
 \_m00se\_ - GUI, Gain features, Acceleration types  
 Sidiouth  - Primary tester and sounding board  
 TauntyArmordillo - Originator of the alternate curve ideas (Natural and Motivity types)  
-Kovaak - Brought us together
-SupremeRakib - For file decoding
+Kovaak - Brought us together   
+SupremeRakib - For file decoding   
