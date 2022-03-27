@@ -20,5 +20,4 @@ simon - Driver & Acceleration Logic
 Sidiouth  - Primary tester and sounding board  
 TauntyArmordillo - Originator of the alternate curve ideas (Natural and Motivity types)  
 Kovaak - Brought us together
-
 SupremeRakib - For file decoding
