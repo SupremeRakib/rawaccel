@@ -16,9 +16,9 @@ namespace grapher
             ChartXY sensitivityChart,
             ChartXY velocityChart,
             ChartXY gainChart,
+            TableLayoutPanel chartContainer,
             ToolStripMenuItem enableVelocityAndGain,
             ToolStripMenuItem enableLastMouseMove,
-            ToolStripMenuItem enableStreamingMode,
             Button writeButton,
             AccelCalculator accelCalculator)
         {
@@ -30,6 +30,7 @@ namespace grapher
                 sensitivityChart,
                 velocityChart,
                 gainChart,
+                chartContainer,
                 accelCalculator,
                 estimated,
                 estimatedX,
@@ -38,7 +39,6 @@ namespace grapher
             ContainingForm = form;
             EnableVelocityAndGain = enableVelocityAndGain;
             EnableLastValue = enableLastMouseMove;
-            EnableStreamingMode = enableStreamingMode;
 
             WriteButton = writeButton;
 
@@ -46,8 +46,6 @@ namespace grapher
             EnableVelocityAndGain.CheckedChanged += new System.EventHandler(OnEnableVelocityGainCheckStateChange);
 
             EnableLastValue.CheckedChanged += new System.EventHandler(OnEnableLastMouseMoveCheckStateChange);
-
-            EnableStreamingMode.CheckedChanged += new System.EventHandler(OnEnableStreamingModeCheckStateChange);
 
             ChartState = ChartStateManager.InitialState();
             ChartState.Activate();
@@ -61,8 +59,6 @@ namespace grapher
         public RawAcceleration ContainingForm { get; }
 
         public ToolStripMenuItem EnableVelocityAndGain { get; }
-
-        public ToolStripMenuItem EnableStreamingMode { get; }
 
         private ToolStripMenuItem EnableLastValue { get; }
 
@@ -128,7 +124,6 @@ namespace grapher
             Bind();
         }
 
-
         public void Redraw()
         {
             ChartState.Redraw();
@@ -181,10 +176,6 @@ namespace grapher
             {
                 HideVelocityAndGain();
             }
-        }
-        private void OnEnableStreamingModeCheckStateChange(object sender, EventArgs e)
-        {
-            ChartState.SetStreaming(EnableStreamingMode.Checked);
         }
 
         private void OnEnableLastMouseMoveCheckStateChange(object sender, EventArgs e)

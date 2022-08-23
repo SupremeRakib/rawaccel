@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using grapher.Models.Calculations;
-using grapher.Models.Options;
-using grapher.Models.Serialized;
 using grapher.Models;
-using System.Reflection;
-using System.Diagnostics;
 using System.IO;
+using grapher.Models.Serialized;
+using grapher.Models.Theming;
 
 namespace grapher
 {
@@ -37,12 +29,41 @@ namespace grapher
                     new ToolStripMenuItem("&About", null, (s, e) => {
                         using (var form = new AboutBox(driverVersion))
                         {
+                            Theme.Apply(form);
+
                             form.ShowDialog();
                         }
                     })
             });
+            
+            var schemes = ColorSchemeManager.LoadSchemes().ToList();
+            var themeMenuItem = new ToolStripMenuItem("&Themes");
 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { HelpMenuItem });
+            themeMenuItem.DropDownItemClicked += (s, e) =>
+            {
+                if (e.ClickedItem == null) return;
+
+                foreach (ToolStripMenuItem item in themeMenuItem.DropDownItems)
+                {
+                    item.Checked = e.ClickedItem.Text == item.Text;
+                }
+            };
+
+            var settings = GUISettings.MaybeLoad();
+
+            Theme.CurrentScheme = ColorSchemeManager.GetSelected(settings, schemes);
+            
+            foreach (var colorScheme in schemes)
+            {
+                var menuItem = new ToolStripMenuItem(colorScheme.Name);
+
+                menuItem.Checked = settings.CurrentColorScheme == colorScheme.Name;
+                themeMenuItem.DropDownItems.Add(menuItem);
+            }
+
+            menuStrip1.Items.AddRange(new ToolStripItem[] { themeMenuItem, HelpMenuItem });
+
+            Theme.Apply(this, menuStrip1);
 
             AccelGUI = AccelGUIFactory.Construct(
                 this,
@@ -52,6 +73,7 @@ namespace grapher
                 VelocityChartY,
                 GainChart,
                 GainChartY,
+                chartContainer,
                 accelTypeDropX,
                 accelTypeDropY,
                 XLutApplyDropdown,
@@ -64,10 +86,10 @@ namespace grapher
                 toggleButton,
                 showVelocityGainToolStripMenuItem,
                 showLastMouseMoveToolStripMenuItem,
-                streamingModeToolStripMenuItem,
                 AutoWriteMenuItem,
                 DeviceMenuItem,
                 ScaleMenuItem,
+                themeMenuItem,
                 DPITextBox,
                 PollRateTextBox,
                 DirectionalityPanel,
@@ -354,5 +376,19 @@ namespace grapher
                 Marshal.FinalReleaseComObject(shell);
             }
         }
-	}
+
+        private void RawAcceleration_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Location = Location;
+            Properties.Settings.Default.Size = Size;
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void RawAcceleration_Load(object sender, EventArgs e)
+        {
+            Location = Properties.Settings.Default.Location;
+            Size = Properties.Settings.Default.Size;
+        }
+    }
 }

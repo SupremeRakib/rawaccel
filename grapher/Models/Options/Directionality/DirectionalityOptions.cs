@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using grapher.Models.Theming;
 
 namespace grapher.Models.Options.Directionality
 {
@@ -12,7 +13,7 @@ namespace grapher.Models.Options.Directionality
     {
         public DirectionalityOptions(
             Panel containingPanel,
-            Label directionalityLabel,
+            Button directionalityLabel,
             Label directionalityX,
             Label directionalityY,
             Label directionalityActiveValueTitle,
@@ -24,7 +25,14 @@ namespace grapher.Models.Options.Directionality
             int top)
         {
             ContainingPanel = containingPanel;
+
             DirectionalityLabel = directionalityLabel;
+            DirectionalityLabel.FlatStyle = FlatStyle.Flat;
+            DirectionalityLabel.FlatAppearance.BorderSize = 0;
+            DirectionalityLabel.FlatAppearance.MouseDownBackColor = Theme.CurrentScheme.Control;
+            DirectionalityLabel.FlatAppearance.CheckedBackColor = Theme.CurrentScheme.Control;
+            DirectionalityLabel.FlatAppearance.MouseOverBackColor = Theme.CurrentScheme.Control;
+
             DirectionalityX = directionalityX;
             DirectionalityY = directionalityY;
             DirectionalityActiveValueTitle = directionalityActiveValueTitle;
@@ -46,7 +54,7 @@ namespace grapher.Models.Options.Directionality
 
         public Panel ContainingPanel { get; }
 
-        public Label DirectionalityLabel { get; }
+        public Button DirectionalityLabel { get; }
 
         public Label DirectionalityX { get; }
 
@@ -167,9 +175,9 @@ namespace grapher.Models.Options.Directionality
 
         private void Panel_Paint(object sender, PaintEventArgs e)
         {
-            Color col = Color.DarkGray;
+            Color col = Theme.CurrentScheme.ControlBorder;
             ButtonBorderStyle bbs = ButtonBorderStyle.Dashed;
-            int thickness = 2;
+            int thickness = 1;
             ControlPaint.DrawBorder(e.Graphics, this.ContainingPanel.ClientRectangle, col, thickness, bbs, col, thickness, bbs, col, thickness, bbs, col, thickness, bbs);
         }
 

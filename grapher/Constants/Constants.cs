@@ -68,7 +68,7 @@ namespace grapher
         public const int DirectionalityVerticalOffset = 315;
 
         /// <summary> Padding between directionality title and containing panel </summary>
-        public const int DirectionalityTitlePad = 8;
+        public const int DirectionalityTitlePad = 4;
 
         public const float SmallButtonSizeFactor = 0.666f;
 
@@ -158,23 +158,28 @@ namespace grapher
         /// <summary> Marker size for last-mouse-move chart series. </summary>
         public const int DotMarkerSize = 7;
 
-        /// <summary> Foreground Color When Streamer Mode Active </summary>
-        public static readonly System.Drawing.Color fgStreamer = System.Drawing.Color.White;
-
-        /// <summary> Background Color When Streamer Mode Active </summary>
-        public static readonly System.Drawing.Color bgStreamer = System.Drawing.Color.Green;
-
-        /// <summary> Foreground Color When Streamer Mode Inactive </summary>
-        public static readonly System.Drawing.Color fgNoStreamer = System.Drawing.Color.Black;
-
-        /// <summary> Background Color When Streamer Mode Inactive </summary>
-        public static readonly System.Drawing.Color bgNoStreamer = System.Drawing.Color.White;
-
-        /// <summary> Color of font in active value labels. </summary>
-        public static readonly Color ActiveValueFontColor = Color.FromArgb(255, 65, 65, 65);
-
         public static readonly Point Origin = new Point(0);
         public static readonly Size MaxSize = new Size(9999, 9999);
+
+        /// <summary> Amount of rows when only the sensitivity chart is shown. </summary>
+        public static readonly int RegularRowCount = 1;
+        /// <summary> Height of each row when only the sensitivity chart is shown. </summary>
+        public static readonly float RegularRowHeight = 100f;
+
+        /// <summary> Amount of rows when the sensitivity, velocity and gain charts are shown. </summary>
+        public static readonly int VelocityAndGainRowCount = 3;
+        /// <summary> Height of each row when the sensitivity, velocity and gain charts are shown. </summary>
+        public static readonly float VelocityAndGainRowHeight = 33.3f;
+
+        /// <summary> Amount of columns when the charts are combined. </summary>
+        public static readonly int CombinedChartColumnCount = 1;
+        /// <summary> Width of each column when the charts are combined. </summary>
+        public static readonly float CombinedChartColumnWidth = 100f;
+
+        /// <summary> Amount of columns when both the X and Y chart are shown. </summary>
+        public static readonly int SeparateChartColumnCount = 2;
+        /// <summary> Width of each column when both the X and Y chart are shown. </summary>
+        public static readonly float SeparateChartColumnWidth = 50f;
 
         #endregion ReadOnly
     }
